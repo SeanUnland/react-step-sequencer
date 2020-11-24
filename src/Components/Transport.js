@@ -1,13 +1,13 @@
 import React from "react";
 import PlayButton from "./PlayButton";
 import TimeSignature from "./TimeSignature";
-import TempoSlider from "./TempoSlider";
-import TempoDisplay from "./TempoDisplay";
+import Tempo from "./Tempo";
+import DisplayTempo from "./DisplayTempo";
 import TapTempo from "./TapTempo";
 import ResetButton from "./ResetButton";
 import styles from "./Buttons.module.css";
 
-const Buttons = props => (
+const Transport = (props) => (
   <div id="buttons" className={styles.root}>
     <div className={styles.wrapperTop}>
       <PlayButton
@@ -22,10 +22,10 @@ const Buttons = props => (
     </div>
     <div className={styles.wrapperBottom}>
       <TapTempo handleTap={props.handleTap} />
-      <TempoDisplay tempo={props.tempo} />
-      <TempoSlider tempo={props.tempo} onTempoChange={props.onTempoChange} />
+      <DisplayTempo tempo={props.tempo} />
+      <Tempo tempo={props.tempo} onTempoChange={props.onTempoChange} />
     </div>
   </div>
 );
 
-export default Buttons;
+export default Transport;

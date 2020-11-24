@@ -1,48 +1,62 @@
-<br>
+# Capstone Project - Mini Pop
 
-<p align="center">
-  <a href="https://github.com/sam-parsons/react-step-sequencer">
-    <img src="./assets/logo.png" alt="logo" width="80" />
-  </a>
-</p>
+## Project Links
 
-<a href="https://sam-parsons.github.io/react-step-sequencer">
-  <img src="./assets/screenshot.gif" alt="screenshot" width="100%" />
-</a>
+[GitHub Repo Link](https://github.com/SeanUnland/unit-4-capstone)
 
-<br>
-<br>
+## Project Description
 
-## Installation
+I will be building a web based drum sequencer/sampler and synth application using Tone.js and React.
 
-```sh
-git clone https://github.com/sam-parsons/react-step-sequencer.git
+## Wireframe
 
-cd react-step-sequencer/
+[React Architecture](https://i.imgur.com/8rnVH0n.jpg)
 
-yarn
+[Wire Frame](https://i.imgur.com/KrVYlHe.jpg)
 
-yarn start
-```
+### MVP
 
-### [Demo](https://sam-parsons.github.io/react-step-sequencer)
+A functional and interactive drum sequencer/sampler.
 
-## Coverage
+- User can create a drum sequence
+- User can assign samples from a library to each sequence
+- User can change BPM
+- User can play synthesizer
+- User can modify the sequece
 
-- Chrome 74, Firefox 67, Safari 11
+### POST MVP
 
-## Features
+- User can add a swing percentage
+- User can toggle filters such as EQ or distort
+- Create timbre effects like a tape effect
 
-- Variable sequence length
-- Variable pitches
-- Tap Tempo relies on separate AudioContext timer
-  - Works whether sequence is playing or not
+### Components
 
-## Future Features
+| Component      | Description                                 |
+| -------------- | ------------------------------------------- |
+| App            | Will hold initial functions                 |
+| Drum Sequencer | Be used to create the drum matrix and logic |
+| Sample Library | Will hold all of the samples                |
+| Synthesizer    | Will be used to create the synth            |
+| Tempo          | Will be used to create and change the BPM   |
+| Effects        | Can create effects that can be toggled      |
 
-- Idiomatic formatting of triple meters
-- Measure Sequencing
+### Time Table
 
-## License
+| Component      | Priority   | Estimated Time | Actual Time |
+| -------------- | ---------- | -------------- | ----------- |
+| App            | H          | 7              |             |
+| Drum Sequencer | H          | 8              |             |
+| Sample Library | H          | 7              |             |
+| Synthesizer    | H          | 8              |             |
+| Tempo          | H          | 4              |             |
+| Effects        | M          | 8              |             |
+|                | Total Time | 42             |             |
 
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+## Additional Libraries
+
+Tone.js
+
+React
+
+## Code Snippet

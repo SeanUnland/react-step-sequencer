@@ -1,16 +1,16 @@
 import React from "react";
 import styles from "./BoxRow.module.css";
-import PitchSelect from "./PitchSelect";
-import Box from "./Box";
+import Pitch from "./Pitch";
+import Sequence from "./Sequence";
 
-const BoxRow = props => (
+const SequenceRow = (props) => (
   <div className={styles.root}>
-    <PitchSelect
+    <Pitch
       onPitchSelect={props.onPitchSelect}
       notes={props.notes}
       row={props.row}
     />
-    <Box
+    <Sequence
       checked={props.checked}
       row={props.row}
       isActive={props.isActive}
@@ -19,4 +19,4 @@ const BoxRow = props => (
   </div>
 );
 
-export default BoxRow;
+export default SequenceRow;

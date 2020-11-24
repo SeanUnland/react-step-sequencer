@@ -1,10 +1,10 @@
 import React from "react";
-import BoxRow from "./BoxRow";
+import SequenceRow from "./SequenceRow";
 import styles from "./StepSequence.module.css";
 
-const StepSequence = props => (
+const DrumSequence = (props) => (
   <div id="step-sequence" className={styles.root}>
-    <BoxRow
+    <SequenceRow
       checked={props.checked}
       onToggle={props.onToggle}
       sequenceLength={props.sequenceLength}
@@ -14,7 +14,7 @@ const StepSequence = props => (
       isActive={props.isActive}
       row="0"
     />
-    <BoxRow
+    <SequenceRow
       checked={props.checked}
       onToggle={props.onToggle}
       sequenceLength={props.sequenceLength}
@@ -26,4 +26,4 @@ const StepSequence = props => (
   </div>
 );
 
-export default StepSequence;
+export default DrumSequence;

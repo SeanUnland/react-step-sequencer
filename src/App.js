@@ -1,16 +1,17 @@
 import React from "react";
 import Tone from "tone";
 import _ from "lodash";
-import Title from "./Components/Title";
-import Buttons from "./Components/Buttons";
-import StepSequence from "./Components/StepSequence";
+import Header from "./Components/Header";
+import Transport from "./Components/Transport";
+import DrumSequence from "./Components/DrumSequence";
 import "./App.css";
+import { motion } from "framer-motion";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faPlay,
   faStop,
   faRecycle,
-  faInfoCircle
+  faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import StartAudioContext from "startaudiocontext";
 
@@ -41,13 +42,16 @@ export default class App extends React.PureComponent {
   state = {
     checked: [
       [true, true, false, false, false, false, false],
-      [false, false, true, false, true, false, true]
+      [false, false, true, false, true, false, true],
     ], // sequencer pattern array
     isPlaying: false,
     sequenceLength: 7, // length of sequence pattern
     tempo: 120,
     maxTempo: 300,
-    isActive: [[0, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0]], // used for highlighting suring visualization
+    isActive: [
+      [0, 0, 0, 1, 0, 1, 0],
+      [0, 1, 0, 1, 0, 1, 0],
+    ], // used for highlighting suring visualization
     renderedNotes: [],
     partContainer: [], // store Part object for future removal
     notes: ["Eb5", "C5"],
@@ -61,34 +65,35 @@ export default class App extends React.PureComponent {
       averageBPM: 0,
       checked: [
         [true, false, false, false, false, false, false, false],
-        [false, false, true, false, true, false, true, false]
+        [false, false, true, false, true, false, true, false],
       ],
       notes: ["Eb5", "C5"],
-      isActive: [[0, 1, 0, 1, 0, 1, 0, 1], [0, 1, 0, 1, 0, 1, 0, 1]]
+      isActive: [
+        [0, 1, 0, 1, 0, 1, 0, 1],
+        [0, 1, 0, 1, 0, 1, 0, 1],
+      ],
     },
     landscape: false,
-    velocity: 0.1
+    velocity: 0.1,
   };
 
   componentDidMount = () => {
     this.generateMetronome();
 
-    // starts both audio contexts on mounting
     StartAudioContext(Tone.context);
     StartAudioContext(context);
 
-    // event listener for space, enter and 't'
-    window.addEventListener("keydown", e => {
+    window.addEventListener("keydown", (e) => {
       if (e.keyCode === 32 || e.keyCode === 13) {
         try {
-          e.preventDefault(); // prevents space bar from triggering selected checkboxes
+          e.preventDefault();
           this.onTogglePlay();
         } catch (e) {
           console.log(e);
         }
       } else if (e.keyCode === 84) {
         try {
-          e.preventDefault(); // prevents space bar from triggering selected checkboxes
+          e.preventDefault();
           this.handleTap();
         } catch (e) {
           console.log(e);
@@ -96,7 +101,6 @@ export default class App extends React.PureComponent {
       }
     });
 
-    // check for orientation, add event listener
     if (
       window.screen.orientation &&
       Math.abs(window.screen.orientation.angle) === 90 &&
@@ -114,8 +118,8 @@ export default class App extends React.PureComponent {
 
   onToggleBox = (i, row) => {
     this.setState(
-      prior => ({
-        checked: toggleBox(prior.checked, i, row)
+      (prior) => ({
+        checked: toggleBox(prior.checked, i, row),
       }),
       () => {
         this.generateMetronome();
@@ -125,8 +129,8 @@ export default class App extends React.PureComponent {
 
   onTogglePlay = () => {
     this.setState(
-      prior => ({
-        isPlaying: !prior.isPlaying
+      (prior) => ({
+        isPlaying: !prior.isPlaying,
       }),
       () => {
         if (!this.state.isPlaying) {
@@ -165,7 +169,7 @@ export default class App extends React.PureComponent {
     }
   };
 
-  onLengthChange = sequenceLength => {
+  onLengthChange = (sequenceLength) => {
     // create a new checked array and push simple everyother note pattern
     const checked = [[], []];
     for (let i = 0; i < sequenceLength; i++) {
@@ -175,7 +179,7 @@ export default class App extends React.PureComponent {
     this.setState(
       () => ({
         sequenceLength,
-        checked
+        checked,
       }),
       () => {
         Tone.Transport.loopEnd = (sequenceLength * 30) / this.state.tempo;
@@ -184,10 +188,10 @@ export default class App extends React.PureComponent {
     );
   };
 
-  onTempoChange = tempo => {
+  onTempoChange = (tempo) => {
     this.setState(
       {
-        tempo
+        tempo,
       },
       () => {
         Tone.Transport.bpm.value = tempo;
@@ -197,13 +201,13 @@ export default class App extends React.PureComponent {
 
   onReset = () => {
     this.setState(
-      prior => ({
+      (prior) => ({
         tempo: prior.defaults.tempo,
         sequenceLength: prior.defaults.sequenceLength,
         isPlaying: prior.defaults.isPlaying,
         checked: prior.defaults.checked,
         notes: prior.defaults.notes,
-        isActive: prior.defaults.isActive
+        isActive: prior.defaults.isActive,
       }),
       () => {
         this.resetTempo();
@@ -258,7 +262,7 @@ export default class App extends React.PureComponent {
         notes:
           row === "0" // refactor this conditional
             ? [note, this.state.notes[1]]
-            : [this.state.notes[0], note]
+            : [this.state.notes[0], note],
       },
       () => {
         this.generateMetronome();
@@ -269,7 +273,7 @@ export default class App extends React.PureComponent {
   generateMetronome = () => {
     // erase or stop all previous parts
     const partContainer = this.state.partContainer;
-    partContainer.forEach(part => part.removeAll());
+    partContainer.forEach((part) => part.removeAll());
 
     // metronome vitals
     const [note1, note2] = this.state.notes,
@@ -286,14 +290,14 @@ export default class App extends React.PureComponent {
           note: note1,
           time: `0:${time}`,
           velocity: velocity,
-          index: i
+          index: i,
         });
       } else if (!matrix[1][i]) {
         renderedNotes.push({
           note: note1,
           time: `0:${time}`,
           velocity: 0,
-          index: i
+          index: i,
         });
       }
       if (matrix[1][i]) {
@@ -301,7 +305,7 @@ export default class App extends React.PureComponent {
           note: note2,
           time: `0:${time}`,
           velocity: velocity,
-          index: i
+          index: i,
         });
       }
     }
@@ -315,11 +319,11 @@ export default class App extends React.PureComponent {
 
     this.setState({
       renderedNotes,
-      partContainer
+      partContainer,
     });
   };
 
-  triggerVisualize = index => {
+  triggerVisualize = (index) => {
     // generate array of 0's
     const length = this.state.sequenceLength;
     const isActive = [_.fill(Array(length), 0), _.fill(Array(length), 0)];
@@ -334,8 +338,8 @@ export default class App extends React.PureComponent {
     return (
       <div className="App">
         <header className="App-header">
-          <Title landscape={this.state.landscape} />
-          <Buttons
+          <Header landscape={this.state.landscape} />
+          <Transport
             isPlaying={this.state.isPlaying}
             onTogglePlay={this.onTogglePlay}
             sequenceLength={this.state.sequenceLength}
@@ -345,7 +349,7 @@ export default class App extends React.PureComponent {
             onReset={this.onReset}
             handleTap={this.handleTap}
           />
-          <StepSequence
+          <DrumSequence
             checked={this.state.checked}
             onToggle={this.onToggleBox}
             sequenceLength={this.state.sequenceLength}
